@@ -1,0 +1,38 @@
+{% case page.language_code %}
+  {% when 'et' %}
+    {% assign blog_title = "Blogipostitused" %}
+    {% assign latest_blog_title = "Viimased postitused blogis" %}
+    {% assign blog_categories = "Kategooriad" %}
+    {% assign instagram_title = "MINU TEGEMISED INSTAGRAMIS" %}
+    {% assign social_title = "Sotsiaalmeedia" %}
+    {% assign read_more_cta = "Loe minust rohkem" %}
+    {% assign contact_title = "Kontakt" %}
+    {% assign send_cta = "Saada kiri" %}
+    {% assign comments_one = "kommentaar" %}
+    {% assign comments = "kommentaari" %}
+    {% assign leave_comment = "Jäta kommentaar" %}
+    {% assign form_name = "Nimi" %}
+    {% assign form_email = "Email" %}
+    {% assign form_body = "Kommentaar" %}
+    {% assign comment_cta = "Saada" %}
+    {% assign field_is_required = "Väli on kohustuslik" %}
+    {% assign search_page = "Otsi lehelt..." %}
+  {% when 'en' %}
+    {% assign blog_title = "Blog posts" %}
+    {% assign latest_blog_title = "Latest blog posts" %}
+    {% assign blog_categories = "Categories" %}
+    {% assign instagram_title = "Follow me on Instagram" %}
+    {% assign social_title = "Socials" %}
+    {% assign read_more_cta = "Read more about me" %}
+    {% assign contact_title = "Contact" %}
+    {% assign send_cta = "Send" %}
+    {% assign comments_one = "comment" %}
+    {% assign comments = "comments" %}
+    {% assign leave_comment = "Leave a comment" %}
+    {% assign form_name = "Name" %}
+    {% assign form_email = "Email" %}
+    {% assign form_body = "Comment" %}
+    {% assign comment_cta = "Send" %}
+    {% assign field_is_required = "Field is required" %}
+    {% assign search_page = "Search..." %}
+{% endcase %}

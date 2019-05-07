@@ -1,0 +1,26 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% stylesheet_link "animate.css" %}
+{% stylesheet_link "style.css" %}
+{% stylesheet_link "custom-style.css" %}
+<link rel="stylesheet" href="{{ site.static_asset_host }}/libs/edicy-search/latest/edicy-search.css">
+{% include "translations" %}
+
+
+{% capture page_title %}
+  {% if article %}
+    {{ article.title }}
+    {% unless page.site_title == "" %} — {{ page.site_title }}{% endunless %}
+  {% else %}
+    {% if site.root_item.selected? and page.site_title != "" %}
+      {{ page.site_title }}
+    {% else %}
+      {{ page.title }}
+      {% unless page.site_title == "" %} — {{ page.site_title }}{% endunless %}
+    {% endif %}
+  {% endif %}
+{% endcapture %}
+
+<title>{{ site.title }} {{ page_title }}</title>

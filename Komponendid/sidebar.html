@@ -1,0 +1,61 @@
+<div class="col-md-12 col-lg-4 sidebar">
+ {% if site.search.enabled %}
+  <div class="sidebar-box search-form-wrap">
+    <form class="search-form">
+      <div class="form-group">
+        <input type="search" class="form-control" placeholder="{{ search_page }}">
+      </div>
+    </form>
+  </div>
+  {% endif %}
+  <div class="sidebar-box">
+  <!-- Tutvustav osa --> 
+    <div class="bio text-center">
+      <img src="/images/helen.jpg" alt="Helen" class="img-fluid">
+      <div class="bio-body">
+        <h2>{% xcontent name="sidebar-about-me-name" %}</h2>
+        <p>{% xcontent name="sidebar-about-me-text" %}</p>
+        <p><a href="/minust" class="btn btn-primary btn-sm rounded">{{ read_more_cta }}</a></p>
+        <p class="social">
+          <a href="https://www.facebook.com/helen.puhu" target="_blank" class="p-2"><span class="fa fa-facebook"></span></a>
+          <a href="https://www.instagram.com/plantbasedhelen/" target="_blank" class="p-2"><span class="fa fa-instagram"></span></a>
+          <a href="https://www.linkedin.com/in/helen-puhu-248676129/" target="_blank" class="p-2"><span class="fa fa-linkedin"></span></a>
+        </p>
+      </div>
+    </div>
+    <!-- Tutvustava osa lõpp --> 
+  </div>
+  <!-- END sidebar-box -->  
+  <div class="sidebar-box" data-search-indexing-allowed="false">
+    <h3 class="heading">{{ latest_blog_title }}</h3>
+    <div class="post-entry-sidebar">
+      <ul>
+        {% for latest_article in site.latest_articles limit: 3 %}
+        <li>
+          <a href="{{ latest_article.url }}">
+            <div class="blogpost-img" style="background-image: url({{ latest_article.image }})"></div>
+            <div class="text pl-2">
+              <h4>{{ latest_article.title }}</h4>
+              <div class="post-meta">
+                <span class="mr-2">{{ latest_article.created_at | date: "%d.%m.%Y" }}</span>
+              </div>
+            </div>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <!-- END sidebar-box -->
+  <div class="sidebar-box">
+    <h3 class="heading">{{ blog_categories }}</h3>
+
+    <ul class="categories">
+    {% for tag in site.language_tags %}
+      <li><a href="/{{ site.blogs.first.page.path }}/tagged/{{ tag.path }}">{{ tag.name }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+  <!-- END sidebar-box -->
+</div>
+<!-- END sidebar -->

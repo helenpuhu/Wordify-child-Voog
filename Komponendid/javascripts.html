@@ -1,0 +1,51 @@
+{% sitejs_include %}
+
+{% unless editmode %}{{ site.analytics }}{% endunless %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.0.0/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+<script type="text/javascript" src="{{ javascripts_path }}/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stellar.js/0.6.2/jquery.stellar.min.js"></script>
+<script type="text/javascript" src="{{ javascripts_path }}/main.js"></script>
+<script type="text/javascript" src="{{ site.static_asset_host }}/libs/edicy-search/latest/edicy-search.js"></script>
+
+<script>
+var searchForm = document.querySelector('.search-form');
+if (searchForm) {
+    var search = new VoogSearch(searchForm, {
+    
+        // Results are lazy-loaded on scroll.
+        // This defines the number of results per query. 
+        per_page: 3,
+    
+        // Language code for restricting the search to page language
+        lang: '{{ page.language_code }}',
+    
+        // If given an DOM element results are rendered inside that element
+        // instead of modal (with scroll lazy load support)
+        resultsContainer: null,
+    
+        // Defines if modal should close on sideclick
+        sideclick: true, 
+    
+        // Mobile checkpoint (adds class "voog-search-mobile-mode" if <= nr)
+        mobileModeWidth: 480,
+    
+        // Updates results on every keypress
+        updateOnKeypress: false,
+
+        // If updateOnKeyPress is true defines the minimal number 
+        // of characters when search is made
+        minQueryLength: 3,
+
+        // Shows the arrow of default search modal
+        showTick: true,
+        
+        // Positioning of the default modal relative to the input
+        // Allowed values "below", "above", "auto"
+        position: "auto"
+    });
+}
+</script>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  {% include "html-head-2" %}
+  </head>
+  <body>
+    <div class="wrap">
+      {% include "päis" %}
+      <section class="site-section py-lg">
+        <div class="container">
+          <div class="row blog-entries element-animate">
+            <div class="col-md-12 col-lg-8 main-content">
+              <div class="post-image"></div>
+              <h1 class="mb-4">{% editable article.title %}</h1>
+              <div class="post-meta">
+                {% assign current_year = "now" | date: "%Y" | to_num %}
+                {% assign article_year = article.created_at | format_date: "%Y" | to_num %}
+                {% if article_year == current_year %}
+                  {% assign article_date_format = "long_without_year" %}
+                {% else %}
+                  {% assign article_date_format = "long" %}
+                {% endif %}
+                <time class="mr-2 post-date" datetime="{{ article.created_at | date: '%Y-%m-%d' }}">
+                  {{ article.created_at | format_date: article_date_format }}
+                </time>&bullet;
+                <span class="ml-2"><span class="fa fa-comments"></span> {{ article.comments_count }}</span>
+              </div>
+              <div class="post-content-body">
+                <div class=""><img class="img-fluid mb-5" src="{{ article.image }}"></div>
+                <div class="clearfix"></div>
+                <h4 class="mb-5">{% editable article.excerpt %}</h4>
+                {% editable article.body %}
+              </div>
+              {% if editmode %} 
+                <div class="tags" data-search-indexing-allowed="false">
+                  {% include "tags-article" %}
+                </div>
+              {% endif %}
+            
+              {% unless editmode %} 
+                {% if blog.has_tags? %}
+
+                {% if tags %}
+                  {% assign selected_tags = tags | map: "name" %}
+                {% endif %}
+
+                <div class="tags mt-4 mb-5">
+                  {% for tag in blog.tags %}
+                    <a class="category{% if selected_tags contains tag.name %} active{% endif %}" href="/{{ blog.page.path_with_lang }}/tagged/{{ tag.path }}">{{ tag.name }}</a>
+                  {% endfor %}
+                </div>
+
+                {% endif %}
+              {% endunless %}
+            
+              {% unless editmode %}
+                {% if article.older or article.newer %}
+                  <div class="post-nav mb-5">
+                    <div class="post-nav-inner">
+                      <div class="row">
+                        <div class="col-md-6">
+                          {% if article.older %}
+                            <div class="post-nav-direction">{{ "previous" | lc }}</div>
+                            <a class="post-nav-link post-nav-link-older" href="{{ article.older.url }}">
+                              <div class="post-nav-link-inner">
+                                <div class="post-nav-title">{{ article.older.title }}</div>
+                              </div>
+                            </a>
+                          {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                          {% if article.newer %}
+                            <div class="post-nav-direction">{{ "next" | lc }}</div>
+                            <a class="post-nav-link post-nav-link-newer" href="{{ article.newer.url }}">
+                              <div class="post-nav-link-inner">
+                                <div class="post-nav-title">{{ article.newer.title }}</div>
+                              </div>
+                            </a>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endunless %}
+        
+  
+          
+              <h2 class="pb-4 mb-5 commentsection-title">
+                {{ article.comments_count }} 
+                {% if article.comments_count == 1 %}
+                  {{ comments_one }}
+                {% else %}
+                  {{ comments }}
+                {% endif %}
+              </h2>
+              <div class="comments">
+                <ul class="comment-list">
+                  {% for comment in article.comments %}
+                    <li class="comment">
+                      
+                        <h3>{{ comment.author }}</h3>
+                        <div class="meta">{{ comment.created_at | date: "%d.%m" }}</div>
+                        <p>{{ comment.body }}</p>
+                        <p><a href="#" class="reply rounded">Reply</a></p>
+                     
+                    </li>
+                  {% endfor %}
+                </ul>
+          
+                {% unless editmode %}
+                  <div id="comment-form" class="comment-form {% unless comment.valid? %} with_errors{% endunless %}">
+                    <h4>{{ leave_comment }}</h4>
+                    {% commentform %}
+                      {% assign comment_name_error = false %}
+                      {% assign comment_email_error = false %}
+                      {% assign comment_body_error = false %}
+                    
+                      {% unless comment.valid? %}
+                        {% for error in comment.errors %}
+                            {% if error == "comment_author_blank" %}{% assign comment_name_error = true %}{% endif %}
+                            {% if error == "comment_email_blank" %}{% assign comment_email_error = true %}{% endif %}
+                            {% if error == "comment_body_blank" %}{% assign comment_body_error = true %}{% endif %}
+                        {% endfor %}
+                      {% endunless %}
+
+                      <div class="form-group comment-name-field{% if comment_name_error %} form-group_with_errors{% endif %}">
+                        <label for="name">{{ form_name }}</label>{% if comment_name_error %}<span class="error"> {{ field_is_required }}</span>{% endif %}
+                        <input type="text" class="form-control" id="author" name="comment[author]">
+                      </div>
+                      <div class="form-group comment-email-field{% if comment_email_error %} form-group_with_errors{% endif %}">
+                        <label for="email">{{ form_email }}</label>{% if comment_email_error %}<span class="error"> {{ field_is_required }}</span>{% endif %}
+                        <input type="email" class="form-control" id="author_email" name="comment[author_email]">
+                      </div>
+                      <div class="form-group{% if comment_body_error %} form-group_with_errors{% endif %}">
+                        <label for="message">{{ form_body }}</label>{% if comment_name_error %}<span class="error"> {{ field_is_required }}</span>{% endif %}
+                        <textarea id="body" cols="30" rows="10" class="form-control"name="comment[body]"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <input name="commit" type="submit" value="{{ comment_cta }}" class="btn btn-primary">
+                      </div>
+                    {% endcommentform %}
+                  </div>
+                {% endunless %}
+              </div>
+            </div>
+            {% include "sidebar" %}
+          </div>
+        </div>
+      </section>
+      {% include "jalus" %}
+    </div>
+    {% include "javascripts" %}
+    <script>
+    $(document).ready(function(){
+      if ($('.comment-form').hasClass('with_errors')) {
+        $('html, body').animate({
+            scrollTop: $("#comment-form").offset().top-50
+        }, 2000);
+      }
+    });
+    </script>
+  </body>
+</html>

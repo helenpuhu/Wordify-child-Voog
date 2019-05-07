@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  {% include "html-head-2" %}
+  </head>
+  <body>
+    <div class="wrap">
+      {% include "päis" %}
+      <section class="site-section py-lg">
+        <div class="container">
+          <div class="row blog-entries element-animate">
+            <div class="col-md-12 col-lg-8 main-content">
+            {% unless editmode %}
+              {% if site.has_tags? %}
+                <div class="blog-header">
+                  {% include "tags-blog" %}
+                  {% if editmode %}<div class="add-post-container">{% addbutton %}</div>{% endif %}
+                </div>
+              {% endif %}
+            {% endunless %}
+              <div class="row">
+              {% for article in articles %}
+              <div class="post-entry-horzontal">
+                  <a href="{{ article.url }}">
+                    <div class="image element-animate" data-animate-effect="fadeIn" style="background-image: url({{ article.image }});"></div>
+                    <span class="text">
+                      <div class="post-meta">
+                        {% assign article_year = article.created_at | format_date: "%Y" | to_num %}
+                        {% if article_year == current_year %}
+                          {% assign article_date_format = "long_without_year" %}
+                        {% else %}
+                          {% assign article_date_format = "long" %}
+                        {% endif %}
+                        <time class="mr-2 post-date" datetime="{{ article.created_at | date: '%Y-%m-%d' }}">
+                          {{ article.created_at | format_date: article_date_format }}
+                        </time>&bullet;
+                        <span class="ml-2"><span class="fa fa-comments"></span> {{ article.comments_count }}</span>
+                      </div>
+                      <h2>{{ article.title }}</h2>
+                    </span>
+                  </a>
+                </div>
+              {% endfor %}
+              </div>
+            </div>
+            {% include "sidebar" %}
+          </div>
+        </div>
+      </section>
+      {% include "jalus" %}
+    </div>
+    {% include "javascripts" %}
+  </body>
+</html>

@@ -1,0 +1,49 @@
+ <header role="banner">
+  <div class="top-bar">
+    <div class="container">
+      <div class="row">
+        <div class="col-9 social">
+          <a href="https://www.facebook.com/helen.puhu" target="_blank"><span class="fa fa-facebook"></span></a>
+          <a href="https://www.instagram.com/plantbasedhelen" target="_blank"><span class="fa fa-instagram"></span></a>
+          <a href="https://www.linkedin.com/in/helen-puhu-248676129/" target="_blank"><span class="fa fa-linkedin"></span></a>
+        </div>
+        <div class="col-3 lang-menu" class="lang-menu-popover">
+          {% include "lang-menu-2" %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container logo-wrap">
+    <div class="row pt-5">
+      <div class="col-12 text-center">
+        <a class="absolute-toggle d-block d-md-none" data-toggle="collapse" href="#navbarMenu" role="button" aria-expanded="false" aria-controls="navbarMenu"><span class="burger-lines"></span></a>
+        <h1 class="site-logo"><a href="{{ site.root_item.url }}">Helen Puhu</a></h1>
+        <p>
+          {% case page.language_code %}
+            {% when 'et' %}#toit #treeningud #kassid #elustiil
+            {% when 'en' %}#food #workout #cats #lifestyle
+          {% endcase %}
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <nav class="navbar navbar-expand-md  navbar-light bg-light">
+    <div class="container">
+      
+     
+      <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav mx-auto">
+        {% for item in site.menuitems %}
+          <li class="nav-item">
+            <a class="nav-link {% if item.selected? %} active{% endif %}" href="{{ item.url }}">{{ item.title }}</a>
+          </li>
+        {% endfor %}
+        </ul>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+<!-- END header -->
